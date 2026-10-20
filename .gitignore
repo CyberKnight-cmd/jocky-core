@@ -1,0 +1,14 @@
+# Vendored LLVM toolchain (provisioned by scripts/fetch-llvm.sh) — never commit
+/third_party/
+
+# Build output
+/build/
+
+# Compiled JOCKY artifacts
+*.o
+*.ll
+*.bc
+
+# Editor / OS cruft
+.DS_Store
+compile_commands.json

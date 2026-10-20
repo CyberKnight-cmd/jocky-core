@@ -1,0 +1,48 @@
+import log;
+
+struct CaseFile {
+    string id;
+    int priority;
+}
+
+fn classify(int p) -> (string, Error) {
+    if p < 0 || p > 10 {
+        return "INVALID", JKY_ERR("priority out of range");
+    }
+    if p >= 8 {
+        return "CRITICAL", nil;
+    }
+    return "ROUTINE", nil;
+}
+
+fn main() -> int {
+    auto pids = [1024, 2048, 4096];
+    pids.append(8192);
+    int total = 0;
+    for pid in pids {
+        total += pid;
+    }
+    log.info("sum of {pids.len()} pids = {total}");
+
+    map[string, int] scores = {"alpha": 5, "beta": 9};
+    scores["gamma"] = 3;
+    if scores.has("beta") {
+        int bs = scores["beta"];
+        log.info("beta score = {bs}");
+    }
+
+    auto c = CaseFile{ id: "CASE-001", priority: 9 };
+    auto label, err = classify(c.priority);
+    if err != nil {
+        log.error("classify failed: {err.message}");
+        return 1;
+    }
+    log.info("case {c.id} -> {label}");
+
+    int i = 0;
+    while i < 3 {
+        log.info("tick {i}");
+        i += 1;
+    }
+    return 0;
+}

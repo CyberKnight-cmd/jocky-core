@@ -1,0 +1,66 @@
+// v0.0.1-alpha showcase: basic-to-complex math using only core language
+// features (functions, loops, float/int arithmetic, explicit casts).
+import log;
+
+fn factorial(int n) -> int {
+    int acc = 1;
+    int i = 2;
+    while i <= n {
+        acc *= i;
+        i += 1;
+    }
+    return acc;
+}
+
+fn fib(int n) -> int {
+    int a = 0;
+    int b = 1;
+    int i = 0;
+    while i < n {
+        int next = a + b;
+        a = b;
+        b = next;
+        i += 1;
+    }
+    return a;
+}
+
+// Integer power by repeated multiplication.
+fn ipow(int base, int exp) -> int {
+    int result = 1;
+    int i = 0;
+    while i < exp {
+        result *= base;
+        i += 1;
+    }
+    return result;
+}
+
+// Newton–Raphson square root on floats.
+fn newton_sqrt(float x) -> float {
+    if x <= 0.0 {
+        return 0.0;
+    }
+    float guess = x / 2.0;
+    int i = 0;
+    while i < 30 {
+        guess = (guess + x / guess) / 2.0;
+        i += 1;
+    }
+    return guess;
+}
+
+fn main() -> int {
+    log.info("10! = {factorial(10)}");
+    log.info("fib(20) = {fib(20)}");
+    log.info("2^16 = {ipow(2, 16)}");
+
+    float root = newton_sqrt(2.0);
+    log.info("sqrt(2) ~= {root}");
+
+    // Mixing requires explicit casts — no silent int/float coercion.
+    int n = 7;
+    float half = (float)n / 2.0;
+    log.info("{n} / 2 = {half}");
+    return 0;
+}

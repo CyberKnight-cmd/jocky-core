@@ -1,0 +1,29 @@
+/*
+ * Case File Metadata Aggregator
+ * Classification: RESTRICTED
+ */
+import fs;
+import log;
+
+fn main() -> int {
+    auto pids = [1024, 2048, 4096];
+    bytes pe_sig = x"4D5A9000 0300 0000";
+    byte nop = 0x90;
+    int memory_offset = 0x7FFF_FFFF_0000;
+    byte mask = 0b0000_1111;
+
+    for pid in pids {
+        log.info("Checking PID {pid} on host DC-PRIMARY");
+    }
+
+    auto data, err = fs.read("/tmp/implant.bin");
+    if err != nil {
+        log.error("read failed: {err.message}");
+        return 1;
+    }
+
+    if data.len() >= 2 && data[0] == nop {
+        log.info("maybe shellcode, {data.len()} bytes");
+    }
+    return 0;
+}
